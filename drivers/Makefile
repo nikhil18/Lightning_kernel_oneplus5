@@ -194,3 +194,5 @@ obj-y 	+= param_read_write/
 
 #porting for support oem trace
 obj-$(CONFIG_OEM_DEBUG_SUPORT)  += oneplus/
+
+obj-$(CONFIG_CPU_QUIET)		+= cpuquiet/
