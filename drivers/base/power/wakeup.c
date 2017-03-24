@@ -897,6 +897,10 @@ void pm_print_active_wakeup_sources(void)
 	int srcuidx, active = 0;
 	struct wakeup_source *last_activity_ws = NULL;
 
+	// kinda pointless to force this routine during screen on
+	if (is_display_on())
+		return;
+
 	srcuidx = srcu_read_lock(&wakeup_srcu);
 	list_for_each_entry_rcu(ws, &wakeup_sources, entry) {
 		if (ws->active) {
