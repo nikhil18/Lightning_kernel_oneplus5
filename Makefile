@@ -405,7 +405,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 
 
 # Optimization for Kryo
-KBUILD_CFLAGS	+= -mcpu=cortex-a57
+KBUILD_CFLAGS	+= -mcpu=cortex-a57+crc+crypto
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
