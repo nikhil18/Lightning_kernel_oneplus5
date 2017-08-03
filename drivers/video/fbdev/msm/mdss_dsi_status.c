@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -64,6 +64,35 @@ static void disable_status_irq(struct dsi_status_data *pdata)
 		disable_irq(gpio_to_irq(ctrl_pdata->disp_te_gpio));
 		atomic_set(&ctrl_pdata->te_irq_ready, 0);
 	}
+}
+
+int mdss_dsi_check_panel_status(struct mdss_dsi_ctrl_pdata *ctrl, void *arg)
+{
+	struct mdss_mdp_ctl *ctl = NULL;
+	struct msm_fb_data_type *mfd = arg;
+	int ret = 0;
+
+	if (!mfd)
+		return -EINVAL;
+
+	ctl = mfd_to_ctl(mfd);
+
+	if (!ctl || !ctrl)
+		return -EINVAL;
+
+	mutex_lock(&ctl->offlock);
+	/*
+	 * if check_status method is not defined
+	 * then no need to fail this function,
+	 * instead return a positive value.
+	 */
+	if (ctrl->check_status)
+		ret = ctrl->check_status(ctrl);
+	else
+		ret = 1;
+	mutex_unlock(&ctl->offlock);
+
+	return ret;
 }
 
 /*
