@@ -1,4 +1,4 @@
-/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2013-2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -38,6 +38,61 @@
 static uint32_t interval = STATUS_CHECK_INTERVAL_MS;
 static int32_t dsi_status_disable = DSI_STATUS_CHECK_INIT;
 struct dsi_status_data *pstatus_data;
+
+static void enable_status_irq(struct dsi_status_data *pdata)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl_pdata;
+
+	ctrl_pdata = container_of(dev_get_platdata(&pdata->mfd->pdev->dev),
+				typeof(*ctrl_pdata), panel_data);
+
+	atomic_set(&ctrl_pdata->te_irq_ready, 1);
+	schedule_delayed_work(&pdata->check_status,
+			msecs_to_jiffies(interval));
+	enable_irq(gpio_to_irq(ctrl_pdata->disp_te_gpio));
+}
+
+static void disable_status_irq(struct dsi_status_data *pdata)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl_pdata;
+
+	ctrl_pdata = container_of(dev_get_platdata(&pdata->mfd->pdev->dev),
+				typeof(*ctrl_pdata), panel_data);
+
+	if (atomic_read(&ctrl_pdata->te_irq_ready)) {
+		disable_irq(gpio_to_irq(ctrl_pdata->disp_te_gpio));
+		atomic_set(&ctrl_pdata->te_irq_ready, 0);
+	}
+}
+
+int mdss_dsi_check_panel_status(struct mdss_dsi_ctrl_pdata *ctrl, void *arg)
+{
+	struct mdss_mdp_ctl *ctl = NULL;
+	struct msm_fb_data_type *mfd = arg;
+	int ret = 0;
+
+	if (!mfd)
+		return -EINVAL;
+
+	ctl = mfd_to_ctl(mfd);
+
+	if (!ctl || !ctrl)
+		return -EINVAL;
+
+	mutex_lock(&ctl->offlock);
+	/*
+	 * if check_status method is not defined
+	 * then no need to fail this function,
+	 * instead return a positive value.
+	 */
+	if (ctrl->check_status)
+		ret = ctrl->check_status(ctrl);
+	else
+		ret = 1;
+	mutex_unlock(&ctl->offlock);
+
+	return ret;
+}
 
 /*
  * check_dsi_ctrl_status() - Reads MFD structure and
