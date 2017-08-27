@@ -34,8 +34,8 @@ static bool enable_wlan_extscan_wl_ws = false;
 module_param(enable_wlan_extscan_wl_ws, bool, 0644);
 static bool enable_wlan_wow_wl_ws = false;
 module_param(enable_wlan_wow_wl_ws, bool, 0644);
-static bool enable_bluedroid_timer_ws = false;
-module_param(enable_bluedroid_timer_ws, bool, 0644);
+static bool enable_bluetooth_timer_ws = false;
+module_param(enable_bluetooth_timer_ws, bool, 0644);
 static bool enable_ipa_ws = false;
 module_param(enable_ipa_ws, bool, 0644);
 static bool enable_wlan_ws = false;
@@ -623,8 +623,8 @@ static bool wakeup_source_blocker(struct wakeup_source *ws)
 				!strncmp(ws->name, "wlan_wake", wslen)) ||
 			(!enable_wlan_rx_wake_ws &&
 				!strncmp(ws->name, "wlan_rx_wake", wslen)) ||
-			(!enable_bluedroid_timer_ws &&
-				!strncmp(ws->name, "bluedroid_timer", wslen)) ||
+			(!enable_bluetooth_timer_ws &&
+				!strncmp(ws->name, "bluetooth_timer", wslen)) ||
 			(!enable_alarmtimer_ws &&
 				!strncmp(ws->name, "alarmtimer", wslen)) ||
 			(!enable_bq_delt_soc_wake_lock_ws &&
