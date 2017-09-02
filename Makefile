@@ -402,7 +402,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 
 
 # Optimization for Kryo
-KBUILD_CFLAGS	+= -mcpu=cortex-a57+crc+crypto
+KBUILD_CFLAGS	+= -mcpu=cortex-a73.cortex-a53+crc+crypto -mtune=cortex-a73.cortex-a53
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
@@ -647,6 +647,14 @@ else
 KBUILD_CFLAGS   += -O2
 endif
 endif
+
+KBUILD_CFLAGS	+= -g0 -DNDEBUG \
+		   -fgraphite-identity \
+		   -fivopts \
+		   -floop-nest-optimize \
+		   -ftree-loop-distribution \
+		   -ftree-loop-distribute-patterns \
+		   -ftree-vectorize
 
 # Needed to unbreak GCC 7.x and above
 KBUILD_CFLAGS   += $(call cc-option,-fno-store-merging,)
