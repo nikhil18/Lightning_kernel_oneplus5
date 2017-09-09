@@ -814,6 +814,7 @@ qpnp_pon_input_dispatch(struct qpnp_pon *pon, u32 pon_type)
 			printk("Power-Key DOWN\n");
 			schedule_delayed_work(&pon->press_work,msecs_to_jiffies(3000));
 		}
+		//#endif /* VENDOR_EDIT */
 		break;
 	case PON_RESIN:
 		pon_rt_bit = QPNP_PON_RESIN_N_SET;
