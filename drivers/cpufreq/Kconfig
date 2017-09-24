@@ -336,6 +336,20 @@ config CPU_FREQ_GOV_BLU_ACTIVE
 
 	  If in doubt, say N.
 
+config CPU_FREQ_GOV_ALUCARD
+ 	bool "'alucard' cpufreq policy governor"
+ 	help
+ 	  'alucard' - This driver adds a dynamic cpufreq policy governor
+ 	  designed for latency-sensitive workloads.
+ 
+ 	  This governor attempts to reduce the latency of clock
+ 	  increases so that the system is more responsive to
+ 	  alucard workloads.
+
+ 	  For details, take a look at linux/Documentation/cpu-freq.
+ 
+	  If in doubt, say N.
+
 if X86
 source "drivers/cpufreq/Kconfig.x86"
 endif
