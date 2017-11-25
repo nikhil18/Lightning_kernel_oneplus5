@@ -12,8 +12,8 @@ KERNEL="Image.gz-dtb"
 DEFCONFIG="lightning_defconfig"
 
 # Kernel Details
-VER=Lightning-Kernel-V8
-VARIANT="OP5-OOS-N-V8"
+VER=Lightning-Kernel-V16
+VARIANT="OP5-OOS-O-V16"
 
 # Vars
 export LOCALVERSION=~`echo $VER`
@@ -26,7 +26,7 @@ REPACK_DIR="${HOME}/android/anykernel2/"
 PATCH_DIR="${HOME}/android/anykernel2/patch/"
 MODULES_DIR="${HOME}/android/anykernel2/modules/"
 ZIP_MOVE="${HOME}/android/zip"
-ZIMAGE_DIR="$KERNEL_DIR/arch/arm64/boot"
+ZIMAGE_DIR="$KERNEL_DIR/out/arch/arm64/boot"
 
 function clean_all {
 		cd $REPACK_DIR
