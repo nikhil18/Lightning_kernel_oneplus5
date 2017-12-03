@@ -61,7 +61,7 @@ function make_zip {
 DATE_START=$(date +"%s")
 
 echo "Build Script:"
-export CROSS_COMPILE=${HOME}/android/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+export CROSS_COMPILE=${HOME}/android/gcc-prebuilts/l-7.x-a73.a53/bin/aarch64-linaro-linux-android-
 echo
 
 while read -p "Do you want to clean stuffs (y/n)? " cchoice
