@@ -681,8 +681,7 @@ static void __cpufreq_limit(bool c0)
 		cpufreq_cpu_put(policy);
 	}
 
-	if (c0)
-		sched_set_boost(1);
+	//sched_set_boost(1);
 }
 
 static void c0_cpufreq_limit(struct work_struct *work)
