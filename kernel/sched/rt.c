@@ -11,7 +11,7 @@
 #include <linux/hrtimer.h>
 
 #include "walt.h"
-#include <linux/hrtimer.h>
+#include "tune.h"
 
 int sched_rr_timeslice = RR_TIMESLICE;
 
@@ -1415,7 +1415,6 @@ enqueue_task_rt(struct rq *rq, struct task_struct *p, int flags)
 		enqueue_pushable_task(rq, p);
 (??)
 (??)	schedtune_enqueue_task(p, cpu_of(rq));
-	cpufreq_update_this_cpu(rq, SCHED_CPUFREQ_RT);
 }
 
 static void dequeue_task_rt(struct rq *rq, struct task_struct *p, int flags)
@@ -1427,18 +1426,7 @@ static void dequeue_task_rt(struct rq *rq, struct task_struct *p, int flags)
 	walt_dec_cumulative_runnable_avg(rq, p);
 
 	dequeue_pushable_task(rq, p);
-
-	if (!rt_se->schedtune_enqueued)
-		return;
-
-	if (flags == DEQUEUE_SLEEP) {
-		get_task_struct(p);
-		start_schedtune_timer(rt_se);
-		return;
-	}
-
-	rt_se->schedtune_enqueued = false;
-	cpufreq_update_this_cpu(rq, SCHED_CPUFREQ_RT);
+(??)	schedtune_dequeue_task(p, cpu_of(rq));
 }
 
 /*
