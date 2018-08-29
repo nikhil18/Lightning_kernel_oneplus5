@@ -496,6 +496,8 @@ static int pl_fcc_vote_callback(struct votable *votable, void *data,
 	if (!chip->main_psy)
 		return 0;
 
+	pr_info("total_fcc_ua=%d\n", total_fcc_ua);
+
 	if (!chip->batt_psy) {
 		chip->batt_psy = power_supply_get_by_name("battery");
 		if (!chip->batt_psy)
@@ -804,6 +806,7 @@ static int pl_fv_vote_callback(struct votable *votable, void *data,
 	struct pl_data *chip = data;
 	union power_supply_propval pval = {0, };
 	int rc = 0;
+	pr_info("%s,fv_uv=%d\n", __func__, fv_uv);
 
 	if (fv_uv < 0)
 		return 0;
@@ -1017,10 +1020,8 @@ static int pl_disable_vote_callback(struct votable *votable,
 			schedule_delayed_work(&chip->pl_awake_work,
 							msecs_to_jiffies(5000));
 	}
-
-	pl_dbg(chip, PR_PARALLEL, "parallel charging %s\n",
+	pr_info("parallel charging %s\n",
 		   pl_disable ? "disabled" : "enabled");
-
 	return 0;
 }
 
