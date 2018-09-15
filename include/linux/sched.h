@@ -182,7 +182,6 @@ extern void sched_update_nr_prod(int cpu, long delta, bool inc);
 extern void sched_get_nr_running_avg(int *avg, int *iowait_avg, int *big_avg,
 				     unsigned int *max_nr,
 				     unsigned int *big_max_nr);
-extern u64 sched_get_cpu_last_busy_time(int cpu);
 
 #ifdef CONFIG_SMP
 extern u32 sched_get_wake_up_idle(struct task_struct *p);
