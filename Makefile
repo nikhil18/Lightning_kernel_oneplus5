@@ -412,6 +412,8 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+                   -Wno-format-overflow \
+                   -Wno-stringop-overflow \
 		   -std=gnu89 $(call cc-option,-fno-PIE) $(CLANG_FLAGS)
 
 
