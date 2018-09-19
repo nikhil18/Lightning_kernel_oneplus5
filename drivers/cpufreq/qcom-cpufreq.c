@@ -52,7 +52,7 @@ static DEFINE_PER_CPU(struct cpufreq_suspend_t, suspend_data);
 
 #ifdef CONFIG_CPU_FREQ_ONEPLUS_QOS
 #define LITTLE_CPU_QOS_FREQ 1900800
-#define BIG_CPU_QOS_FREQ    2361600
+#define BIG_CPU_QOS_FREQ    2457600
 
 unsigned int cluster1_first_cpu;
 static bool qos_cpufreq_flag;
